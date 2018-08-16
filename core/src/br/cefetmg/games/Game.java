@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 /**
@@ -24,6 +25,8 @@ public class Game extends ApplicationAdapter {
 
     private SpriteBatch batch;
     private Texture[] mapLevelsTextures;
+    private Texture goombaTexture;
+    private Goomba goomba;
     
     /**
      * No método create colocamos código de inicialização do jogo. Por exemplo,
@@ -35,9 +38,11 @@ public class Game extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         mapLevelsTextures = new Texture[2];
+        goombaTexture = new Texture("goomba-spritesheet.png");
+        goomba = new Goomba(goombaTexture);
         mapLevelsTextures[0] = new Texture("map-level-1.png");
-
-        
+        mapLevelsTextures[1] = new Texture("map-level-2.png");
+                
         // cor de fundo da tela: branco
         Gdx.gl.glClearColor(1, 1, 1, 1);        
     }
@@ -72,7 +77,8 @@ public class Game extends ApplicationAdapter {
         batch.begin();        
             // desenhos são realizados aqui
             batch.draw(mapLevelsTextures[0], 0, 0);
-
+            goomba.render(batch);
+            batch.draw(mapLevelsTextures[1], 0, 0);
         batch.end();
     }
 
@@ -90,7 +96,7 @@ public class Game extends ApplicationAdapter {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
         }
-
+        goomba.update();
         // ...
     }
     
